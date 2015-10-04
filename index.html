@@ -10,59 +10,72 @@
     <link href="bower_components/bootstrap/dist/css/bootstrap.css" type="text/css" rel="stylesheet" media="all" />
     <link href="bower_components/bootstrap/dist/css/bootstrap-theme.css" type="text/css" rel="stylesheet" media="all" />
     <link href="css/beatspeak.css" type="text/css" rel="stylesheet" media="all" />
-
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 </head>
+
 <body>
 
     <div class="vertical-center">
         <div class="container beatspeak-background">
+
+            <!-- begin nav -->
             <div class="row">
                 <div class="col-md-6"></div>
                 <div class="col-md-6">
 
                     <nav class="navbar navbar-default">
                         <div class="container-fluid">
-                            <!--<div class="navbar-header">-->
-                            <!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">-->
-                            <!--<span class="sr-only">Toggle navigation</span>-->
-                            <!--<span class="icon-bar"></span>-->
-                            <!--<span class="icon-bar"></span>-->
-                            <!--<span class="icon-bar"></span>-->
-                            <!--</button>-->
-                            <!--<a class="navbar-brand" href="#">Project name</a>-->
-                            <!--</div>-->
                             <div id="navbar" class="navbar-collapse collapse">
 
                                 <ul class="nav navbar-nav navbar-right">
                                     <!-- class="active" -->
-                                    <li><a href="#">About</a></li>
-                                    <li><a href="#">Media</a></li>
+                                    <li><a href="#/about">About</a></li>
+                                    <li><a href="#/media">Media</a></li>
                                     <li class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Events <span class="caret"></span></a>
                                         <ul class="dropdown-menu">
                                             <li><a href="#">Subscribe to Calendar</a></li>
                                             <li><a href="#">Schedule</a></li>
-                                            <!--li><a href="#">Something else here</a></li>
-                                            <li role="separator" class="divider"></li>
-                                            <li class="dropdown-header">Nav header</li>
-                                            <li><a href="#">Separated link</a></li>
-                                            <li><a href="#">One more separated link</a></li-->
                                         </ul>
                                     </li>
                                     <li><a href="#">Contact</a></li>
-
                                 </ul>
-                            </div><!--/.nav-collapse -->
-                        </div><!--/.container-fluid -->
+
+                            </div>
+                        </div>
                     </nav>
 
                 </div>
             </div>
+            <!-- end nav -->
+
+            <div class="beatspeak-main" ng-view></div>
 
         </div>
     </div>
+
+    <!-- javascript -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+
+    <!-- angular -->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-loader/angular-loader.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/restangular/dist/restangular.js"></script>
+
+    <!-- beatspeak -->
+    <script src="src/controller/MediaModule.js"></script>
+
+    <!-- app -->
+    <script src="app.js"></script>
+
+    <script>
+        // bootstrap the application when the dom is ready
+        angular.element(document).ready(function() {
+            angular.bootstrap(document, ['beatspeak']);
+        });
+    </script>
 
 </body>
 </html>
