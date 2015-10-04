@@ -30,13 +30,14 @@
                                     <!-- class="active" -->
                                     <li><a href="#/about">About</a></li>
                                     <li><a href="#/media">Media</a></li>
-                                    <li class="dropdown">
+                                    <li><a href="#/events">Events</a></li>
+                                    <!--li class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Events <span class="caret"></span></a>
                                         <ul class="dropdown-menu">
                                             <li><a href="#">Subscribe to Calendar</a></li>
                                             <li><a href="#">Schedule</a></li>
                                         </ul>
-                                    </li>
+                                    </li-->
                                     <li><a href="#">Contact</a></li>
                                 </ul>
 
@@ -54,6 +55,7 @@
     </div>
 
     <!-- javascript -->
+    <script src="http://apis.google.com/js/client.js"></script>
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 
@@ -63,6 +65,7 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/lodash/lodash.js"></script>
     <script src="bower_components/restangular/dist/restangular.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
 
     <!-- beatspeak -->
     <script src="src/controller/MediaModule.js"></script>
@@ -73,7 +76,13 @@
     <script>
         // bootstrap the application when the dom is ready
         angular.element(document).ready(function() {
-            angular.bootstrap(document, ['beatspeak']);
+            // google will often take it's time
+            var checkGoogleApiInterval = setInterval(function(){
+                if(window.gapi) {
+                    clearInterval(checkGoogleApiInterval);
+                    angular.bootstrap(document, ['beatspeak']);
+                }
+            }, 1500);
         });
     </script>
 

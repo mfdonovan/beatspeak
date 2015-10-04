@@ -1,10 +1,15 @@
-<div class="row">
+<div class="row" ng-controller="EventsController">
     <div class="col-md-7"></div>
     <div class="col-md-5">
+
         <div class="thumbnail">
-            <div class="caption">
-                Events
+            <div ng-repeat="event in events" class="caption">
+                <div class="row">
+                    <div class="col-md-8"><h4 style="text-align: left !important;">{{event.summary}}</h4></div>
+                    <div class="col-md-4"><h4 style="text-align: right;">{{event.startDateShort}}</h4></div>
+                </div>
             </div>
         </div>
+
     </div>
 </div>

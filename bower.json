@@ -24,6 +24,7 @@
     "angular-route": "~1.4.7",
     "angular-loader": "~1.4.7",
     "restangular": "~1.5.1",
-    "angular-sanitize": "~1.4.7"
+    "angular-sanitize": "~1.4.7",
+    "angular-moment": "~0.10.3"
   }
 }
