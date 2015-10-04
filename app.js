@@ -2,11 +2,15 @@
 angular.module('beatspeak',
     ['restangular', 'ngRoute']) //'ui.bootstrap',
 
-    .config(['$routeProvider', '$httpProvider', 'RestangularProvider',
-        function($routeProvider, $httpProvider, RestangularProvider) {
+    .config(['$routeProvider', '$httpProvider', '$locationProvider', 'RestangularProvider',
+        function($routeProvider, $httpProvider, $locationProvider, RestangularProvider) {
             RestangularProvider.setBaseUrl('/rest');
 
             $routeProvider
+                .when('/', {
+                    title: 'BeatSpeak | About',
+                    templateUrl: 'src/view/about.view.html'
+                })
                 .when('/about', {
                     title: 'BeatSpeak | About',
                     templateUrl: 'src/view/about.view.html'
@@ -27,6 +31,9 @@ angular.module('beatspeak',
                     title: 'BeatSpeak | About',
                     templateUrl: 'src/view/about.view.html'
                 });
+
+            // use the HTML5 History API
+            $locationProvider.html5Mode(true);
 
         }
     ])
@@ -116,8 +123,8 @@ angular.module('beatspeak',
                         var viewEvent = {
                             summary:        event.summary,
                             location:       event.location,
-                            startDateShort: moment(event.start.dateTime).format('DD/YY'),
-                            endDateShort:   moment(event.end.dateTime).format('DD/YY'),
+                            startDateShort: moment(event.start.dateTime).format('ll'),
+                            endDateShort:   moment(event.end.dateTime).format('ll'),
                             startDate:      moment(event.start.dateTime).format('MMMM Do YYYY, h:mm a'),
                             endDate:        moment(event.end.dateTime).format('MMMM Do YYYY, h:mm a'),
                             startTime:      moment(event.start.dateTime).format('h:mm a'),
