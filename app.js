@@ -34,7 +34,9 @@ angular.module('beatspeak',
 
             // use the HTML5 History API
             // in coordination with apache
-            $locationProvider.html5Mode(true);
+            if(window.history && window.history.pushState){
+                $locationProvider.html5Mode(true);
+            }
 
         }
     ])
