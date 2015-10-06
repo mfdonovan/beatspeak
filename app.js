@@ -41,7 +41,11 @@ angular.module('beatspeak',
         }
     ])
 
-    .controller('MediaController', ['$scope', '$sce', function($scope, $sce) {
+    .controller('AboutController', ['$scope', '$window', '$location', function($scope, $window, $location) {
+        $window.ga('send', 'pageview', { page: $location.url() });
+    }])
+
+    .controller('MediaController', ['$scope', '$sce', '$window', '$location', function($scope, $sce, $window, $location) {
 
         $scope.trustSrc = function(src) {
             return $sce.trustAsResourceUrl(src);
@@ -67,6 +71,8 @@ angular.module('beatspeak',
             height: '410px',
             src:'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/131613316' + paramsString.join('&')
         };
+
+        $window.ga('send', 'pageview', { page: $location.url() });
 
     }])
 
@@ -110,7 +116,7 @@ angular.module('beatspeak',
         }
     ])
 
-    .controller('EventsController', ['$scope', '$sce', 'EventsService', function($scope, $sce, EventsService) {
+    .controller('EventsController', ['$scope', '$sce', '$window', '$location', 'EventsService', function($scope, $sce, $window, $location, EventsService) {
 
         if( !$scope.events ) {
             EventsService.getEvents(function(events){
@@ -143,6 +149,8 @@ angular.module('beatspeak',
 
             });
         }
+
+        $window.ga('send', 'pageview', { page: $location.url() });
 
         //if (events.length > 0) {
         //    for (i = 0; i < events.length; i++) {
