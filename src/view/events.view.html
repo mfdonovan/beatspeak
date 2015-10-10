@@ -3,12 +3,39 @@
     <div class="col-md-5">
 
         <div class="thumbnail">
-            <div ng-repeat="event in events" class="caption">
-                <div class="row">
-                    <div class="col-md-8"><h4 style="text-align: left !important;">{{event.summary}}</h4></div>
-                    <div class="col-md-4"><h4 style="text-align: right;">{{event.startDateShort}}</h4></div>
+
+            <div id="accordion"
+                    class="panel-group scroll-accordion">
+
+                <div ng-repeat="event in events"
+                        class="panel panel-default">
+                    <div id="toggle-trigger-{{$index}}"
+                            data-toggle="collapse" data-parent="#accordion"
+                         data-target="#collapse-{{$index}}" ng-click="injectMap($index)"
+                            class="panel-heading" style="cursor:pointer;">
+                        <div class="pull-left" style="text-align: left;">
+                            <h4>{{event.startDateShort}}</h4></div>
+                        <div class="pull-right" style="text-align: right;">
+                            <h4>
+                                {{event.summary}}&nbsp;&nbsp;<span class="label label-info">Info</span>
+                            </h4>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div id="collapse-{{$index}}" class="panel-body panel-collapse collapse {{event.isExpanded}}">
+                        <h4 style="text-align: right;">
+                            {{event.dateFullFormat}}
+                        </h4>
+                        <h5 style="text-align: right;">
+                            {{event.location}}
+                        </h5>
+                        <div google-map map="event.map"></div>
+                    </div>
                 </div>
+
+
             </div>
+
         </div>
 
     </div>

@@ -2,28 +2,29 @@
 <html lang="en">
 <head>
     <title>BeatSpeak | The Finest SoulCraft</title>
-
     <meta charset="UTF-8">
-    <base href="/">
 
     <script>
         // strictly for local dev
-        if(document.location.pathname == '/beatspeak/') {
-            document.getElementsByTagName('base')[0].setAttribute('href', document.location.pathname);
-        }
+        var base = document.createElement('base');
+        base.href = document.location.pathname;
+        document.getElementsByTagName('head')[0].appendChild(base);
     </script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
     <link href="bower_components/bootstrap/dist/css/bootstrap.css" type="text/css" rel="stylesheet" media="all" />
-    <link href="bower_components/bootstrap/dist/css/bootstrap-theme.css" type="text/css" rel="stylesheet" media="all" />
+    <!--link href="bower_components/bootstrap/dist/css/bootstrap-theme.css" type="text/css" rel="stylesheet" media="all" /-->
+
     <link href="css/beatspeak.css" type="text/css" rel="stylesheet" media="all" />
+
 </head>
 
 <body>
 
     <div class="vertical-center">
+
         <div class="container beatspeak-background">
 
             <!-- begin nav -->
@@ -75,6 +76,8 @@
     <script src="bower_components/lodash/lodash.js"></script>
     <script src="bower_components/restangular/dist/restangular.js"></script>
     <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
+    <script src="bower_components/angular-simple-logger/dist/angular-simple-logger.js"></script>
 
     <!-- beatspeak -->
     <script src="src/controller/MediaModule.js"></script>

@@ -1,6 +1,12 @@
 'use strict';
 angular.module('beatspeak',
-    ['restangular', 'ngRoute']) //'ui.bootstrap',
+    ['restangular', 'ngRoute', 'uiGmapgoogle-maps']) //'ui.bootstrap',
+
+    .factory('Globals', function() {
+        return {
+            mapCounter: 0
+        };
+    })
 
     .config(['$routeProvider', '$httpProvider', '$locationProvider', 'RestangularProvider',
         function($routeProvider, $httpProvider, $locationProvider, RestangularProvider) {
@@ -10,6 +16,7 @@ angular.module('beatspeak',
                 .when('/', {
                     title: 'BeatSpeak | About',
                     templateUrl: 'src/view/about.view.html'
+                    //templateUrl: 'src/view/events.view.html'
                 })
                 .when('/about', {
                     title: 'BeatSpeak | About',
@@ -28,8 +35,10 @@ angular.module('beatspeak',
                     templateUrl: 'src/view/contact.view.html'
                 })
                 .otherwise({
-                    title: 'BeatSpeak | About',
-                    templateUrl: 'src/view/about.view.html'
+                    redirectTo: function() {
+                        window.location.replace(
+                            window.location.origin + '/');
+                    }
                 });
 
             // use the HTML5 History API
@@ -40,6 +49,55 @@ angular.module('beatspeak',
 
         }
     ])
+
+    .directive('googleMap', function($timeout, $window, $compile, Globals){
+
+        var stub = '<div style="width:368px;height:200px;">'
+        var template = "<ui-gmap-google-map id='map{{getIdCounter()}}' center='map.center' zoom='map.zoom'>" +
+            "<ui-gmap-marker idKey='getIdCounter()' coords='map.center'></ui-gmap-marker>" +
+            "</ui-gmap-google-map>";
+
+        return {
+                restrict: 'A',
+                scope: {
+                    map: '=map',
+                },
+                replace: false,
+                transclude: false,
+                template:stub,
+                link: function($scope, $element, $attr) {
+
+                    $scope.idCounter = ++Globals.mapCounter;
+                    $scope.getIdCounter = function() {
+                        return $scope.idCounter;
+                    };
+
+                    $scope.redraw = function(swap) {
+                        if($scope.map) {
+                            $timeout(function() {
+                                $scope.idCounter = ++Globals.mapCounter;
+                                $element.empty();
+                                $element.html(swap ? swap : template);
+                                $compile($element.contents(), false)($scope);
+                            }, 100, false);
+                        }
+                    };
+
+                    $scope.$watch("map", function(newValue, oldValue) {
+                        //console.log(newValue == oldValue);
+                        var id = '#map' + $scope.getIdCounter();
+
+                        if(newValue != oldValue) {
+                            $scope.redraw();
+                        } else {
+                            $scope.redraw(stub);
+                        }
+                    });
+
+                }
+            };
+
+    })
 
     .controller('AboutController', ['$scope', '$window', '$location', function($scope, $window, $location) {
         $window.ga('send', 'pageview', { page: $location.url() });
@@ -76,15 +134,11 @@ angular.module('beatspeak',
 
     }])
 
-    .service('EventsService', ['Restangular',
-        function(Restangular) {
+    .service('EventsService', ['Restangular', '$http', '$sce',
+        function(Restangular, $http, $sce) {
             this.getEvents = function(callback) {
 
                 var _gapi = gapi || window['gapi'] || window.gapi;
-
-                //$scope.trustSrc = function(src) {
-                //    return $sce.trustAsResourceUrl(src);
-                //};
 
                 var APIKEY = 'AIzaSyDfK94EjiqyzwbZ1bku-dz4WkTVYnUDoKE';
 
@@ -112,11 +166,44 @@ angular.module('beatspeak',
 
                 loadCalendarApi();
 
-            }
+            };
+
+            this.geoCodeAddress = function(address, callback) {
+                var url = 'http://maps.google.com/maps/api/geocode/json';
+                url = $sce.trustAsResourceUrl(url += '?sensor=false&address=' + address);
+                // console.log('geocode url: ' + url);
+                $http.get(url).success(function(mapData) {
+                    //console.log('mapData');
+                    //console.log(mapData);
+                    callback(mapData);
+                });
+            };
         }
     ])
 
-    .controller('EventsController', ['$scope', '$sce', '$window', '$location', 'EventsService', function($scope, $sce, $window, $location, EventsService) {
+    .controller('EventsController', ['$scope', '$sce', '$window', '$location', '$timeout', '$element', 'EventsService', function($scope, $sce, $window, $location, $timeout, $element, EventsService) {
+
+        $scope.options = {icon:'url/icon.png'};
+
+        $scope.injectMap = function(index) {
+
+            var eventData = $scope.events[index];
+
+            // let's get the geocode data
+            if(eventData.map == null) {
+                eventData.map = { center: { latitude: 45, longitude: -73 }, zoom: 14 };
+                var address = $scope.events[index].location;
+                // console.log('address: ' + address);
+                EventsService.geoCodeAddress(address, function(mapData){
+
+                    var location = mapData.results[0].geometry.location;
+                    eventData.map.center.latitude = location.lat;
+                    eventData.map.center.longitude = location.lng;
+
+                });
+            }
+
+        }
 
         if( !$scope.events ) {
             EventsService.getEvents(function(events){
@@ -130,14 +217,17 @@ angular.module('beatspeak',
                     if(event.visibility == 'public') {
 
                         var viewEvent = {
-                            summary:        event.summary,
+                            //isExpanded:     $scope.events.length == 0 ? 'in' : null,
+                            summary:        event.summary.replace(/BeatSpeak at /gi, ''),
                             location:       event.location,
-                            startDateShort: moment(event.start.dateTime).format('ll'),
-                            endDateShort:   moment(event.end.dateTime).format('ll'),
+                            startDateShort: moment(event.start.dateTime).format('MM/DD/YY'),
+                            endDateShort:   moment(event.end.dateTime).format('MM/DD/YY'),
                             startDate:      moment(event.start.dateTime).format('MMMM Do YYYY, h:mm a'),
                             endDate:        moment(event.end.dateTime).format('MMMM Do YYYY, h:mm a'),
                             startTime:      moment(event.start.dateTime).format('h:mm a'),
-                            endTime:        moment(event.end.dateTime).format('h:mm a')
+                            endTime:        moment(event.end.dateTime).format('h:mm a'),
+                            dateFullFormat: moment(event.start.dateTime).format('MMMM Do YYYY, h:mm a') + ' - ' + moment(event.end.dateTime).format('h:mm a'),
+                            map:            null
                         };
 
                         $scope.events.push(viewEvent);
@@ -150,29 +240,20 @@ angular.module('beatspeak',
             });
         }
 
-        $window.ga('send', 'pageview', { page: $location.url() });
-
-        //if (events.length > 0) {
-        //    for (i = 0; i < events.length; i++) {
-        //        var event = events[i];
-        //        ///console.log(event);
-        //
-        //        var when = event.start.dateTime;
-        //        if (!when) {
-        //            when = event.start.date;
-        //        }
-        //        appendPre(event.summary);
-        //        appendPre(new Date(when).toDateString());
+        //for(var i in $scope.events) {
+        //    if($scope.events[i].isExpanded) {
+        //        $scope.injectMap[i];
         //    }
-        //} else {
-        //    appendPre('No upcoming events found.');
         //}
-        //function appendPre(message) {
-        //    var pre = document.getElementById('beatSpeakEvents');
-        //    var textContent = document.createTextNode(message);
-        //    pre.appendChild(textContent);
-        //    pre.appendChild(document.createElement('br'));
-        //}
+
+        //
+
+        $timeout(function() {
+            $element.find('#toggle-trigger-0').trigger('click');
+        }, 1000, false);
+
+
+        $window.ga('send', 'pageview', { page: $location.url() });
 
     }])
 

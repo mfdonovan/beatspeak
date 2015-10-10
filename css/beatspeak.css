@@ -28,6 +28,43 @@ body {
     color:#FFFFFF;
 }
 
+.table {
+    margin-bottom: 0px;
+}
+
+.table tbody:nth-child(odd) {
+    background: #f5f5f5;
+    border: 0 none;
+}
+.table tbody:nth-child(even) {
+    background: #e5e5e5;
+    border: 0 none;
+}
+
+.panel-group {
+    margin-bottom: 0px;
+}
+
+.scroll-accordion {
+    max-height: 510px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+/* google maps */
+.angular-google-map-container {
+    height: 200px;
+    border: 1px solid #ddd;
+}
+
+/* iPad */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : landscape) {
+    /* Styles */
+}
+
 /* BeatSpeak specific */
 
 .jumbotron {
@@ -45,4 +82,10 @@ body {
 h4, .h4, h5, .h5, h6, .h6 {
     margin-top: 0px;
     margin-bottom: 3px;
+    color: #1e223f;
+}
+
+.glyphicon {
+    color: #1e223f;
+    font-size: 12px;
 }
