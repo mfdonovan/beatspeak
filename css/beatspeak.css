@@ -79,11 +79,24 @@ and (orientation : landscape) {
     padding: 66px 82px 82px 82px;
 }
 
+ul.nav .glyphicon {
+    font-size: 16px;
+    color: #ffffff;
+}
+
+h4 .glyphicon {
+    font-size: 16px;
+}
+
 h4, .h4, h5, .h5, h6, .h6 {
     margin-top: 0px;
     margin-bottom: 3px;
     color: #1e223f;
 }
+h5, .h5 {
+    margin-bottom: 8px;
+}
+
 
 .glyphicon {
     color: #1e223f;

@@ -191,7 +191,7 @@ angular.module('beatspeak',
 
             // let's get the geocode data
             if(eventData.map == null) {
-                eventData.map = { center: { latitude: 45, longitude: -73 }, zoom: 14 };
+                eventData.map = { center: { latitude: 45, longitude: -73 }, zoom: 17 };
                 var address = $scope.events[index].location;
                 // console.log('address: ' + address);
                 EventsService.geoCodeAddress(address, function(mapData){

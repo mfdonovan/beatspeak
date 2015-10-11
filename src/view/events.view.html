@@ -3,7 +3,6 @@
     <div class="col-md-5">
 
         <div class="thumbnail">
-
             <div id="accordion"
                     class="panel-group scroll-accordion">
 
@@ -17,7 +16,7 @@
                             <h4>{{event.startDateShort}}</h4></div>
                         <div class="pull-right" style="text-align: right;">
                             <h4>
-                                {{event.summary}}&nbsp;&nbsp;<span class="label label-info">Info</span>
+                                {{event.summary}}&nbsp;&nbsp;<span class="label label-info">Details</span>
                             </h4>
                         </div>
                         <div class="clearfix"></div>
@@ -29,7 +28,8 @@
                         <h5 style="text-align: right;">
                             {{event.location}}
                         </h5>
-                        <div google-map map="event.map"></div>
+                        <div google-map map="event.map" style="display:inline;"></div>
+                        <div class="clearfix"></div>
                     </div>
                 </div>
 
