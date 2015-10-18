@@ -1,6 +1,12 @@
 Options +FollowSymLinks
 RewriteEngine On
-RewriteBase /
+
+# calendar
+RewriteRule "^calendar\.ics$" "https://www.google.com/calendar/ical/s359u0ch0e55rv51c0i8vjbf04@group.calendar.google.com/public/basic.ics"  [R,L,NE]
+
+#RewriteBase /
+
+# angular paths
 RewriteCond %{REQUEST_URI} !^(/index\.html|/img|/js|/css|/robots\.txt|/favicon\.ico)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

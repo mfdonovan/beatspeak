@@ -4,7 +4,8 @@ angular.module('beatspeak',
 
     .factory('Globals', function() {
         return {
-            mapCounter: 0
+            mapCounter: 0,
+            ical: 'webcal://www.google.com/calendar/ical/s359u0ch0e55rv51c0i8vjbf04%40group.calendar.google.com/public/basic.ics'
         };
     })
 
@@ -29,6 +30,12 @@ angular.module('beatspeak',
                 .when('/events', {
                     title: 'BeatSpeak | Events',
                     templateUrl: 'src/view/events.view.html'
+                })
+                .when('/calendar', {
+                    redirectTo: function() {
+                        window.location.replace(
+                            window.location.origin + '/calendar.ics');
+                    }
                 })
                 .when('/contact', {
                     title: 'BeatSpeak | Contact',
@@ -249,9 +256,13 @@ angular.module('beatspeak',
         //
 
         $timeout(function() {
-            $element.find('#toggle-trigger-0').trigger('click');
+            // Download the calendar
+            if($location.$$path.indexOf('events') > -1) {
+                $window.$('a.calendarSubscribe').trigger('click');
+            } else {
+                $element.find('#toggle-trigger-0').trigger('click');
+            }
         }, 1000, false);
-
 
         $window.ga('send', 'pageview', { page: $location.url() });
 
