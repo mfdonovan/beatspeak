@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>http://www.beatspeak.net/</loc>
+        <lastmod>2015-10-01</lastmod>
+        <changefreq>hourly</changefreq>
+    </url>
+    <url>
+        <loc>http://www.beatspeak.net/about</loc>
+        <lastmod>2015-10-01</lastmod>
+        <changefreq>hourly</changefreq>
+    </url>
+    <url>
+        <loc>http://www.beatspeak.net/media</loc>
+        <lastmod>2015-10-01</lastmod>
+        <changefreq>hourly</changefreq>
+    </url>
+    <url>
+        <loc>http://www.beatspeak.net/events</loc>
+        <lastmod>2015-10-01</lastmod>
+        <changefreq>hourly</changefreq>
+    </url>
+    <url>
+        <loc>http://www.beatspeak.net/calendar.ics</loc>
+        <lastmod>2015-10-01</lastmod>
+        <changefreq>hourly</changefreq>
+    </url>
+</urlset> 
