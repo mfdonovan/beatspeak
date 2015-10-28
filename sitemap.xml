@@ -25,4 +25,30 @@
         <lastmod>2015-10-01</lastmod>
         <changefreq>hourly</changefreq>
     </url>
+
+    <url>
+        <loc>http://beatspeak.net/</loc>
+        <lastmod>2015-10-01</lastmod>
+        <changefreq>hourly</changefreq>
+    </url>
+    <url>
+        <loc>http://beatspeak.net/about</loc>
+        <lastmod>2015-10-01</lastmod>
+        <changefreq>hourly</changefreq>
+    </url>
+    <url>
+        <loc>http://beatspeak.net/media</loc>
+        <lastmod>2015-10-01</lastmod>
+        <changefreq>hourly</changefreq>
+    </url>
+    <url>
+        <loc>http://beatspeak.net/events</loc>
+        <lastmod>2015-10-01</lastmod>
+        <changefreq>hourly</changefreq>
+    </url>
+    <url>
+        <loc>http://beatspeak.net/calendar.ics</loc>
+        <lastmod>2015-10-01</lastmod>
+        <changefreq>hourly</changefreq>
+    </url>
 </urlset> 
